@@ -41,6 +41,21 @@
   <p>With rising sea levels from climate change and the <a href="https://www.nytimes.com/2017/04/18/magazine/when-rising-seas-transform-risk-into-certainty.html">promise</a> of more flooding, which areas and <i>who</i> will likely be most affected? How is affordable housing construction responding to this? </p>
 	</div>
 
+<div id='menu'>
+  <label class='check-container'>
+      Sandy Inundation Zone
+      <input id='floodZones' type='checkbox' name='viz-toggle' checked='checked'>
+    </label>
+  <label class='check-container'>
+      NYCHA Buildings
+      <input id='nychaBuildings' type='checkbox' name='viz-toggle' checked='checked'>
+  </label>
+  <label class='check-container'>
+      +300 People Below Poverty Line
+      <input id='povertyLevel' type='checkbox' name='viz-toggle' checked='checked'>
+  </label>
+</div>
+
 	</div>
   <script>
   // You'll be inserting your JS code to initialize your map here
@@ -54,45 +69,98 @@
     // minZoom: 12
   });
 
-  map.on('load',function(){
-    // Give your layer's source a nickname you'll remember easily.
-    map.addSource('sandyLayer',{
-      'type':'vector',
-      'url': 'mapbox://iamwfx.bpjzmy2b'
+  map.on('load', function() {
+    // Add the poverty level layer first
+    map.addSource('censusLayer', {
+      'type': 'vector',
+      'url': 'mapbox://iamwfx.6nowkujs'
     });
 
-    map.addSource('nychaLayer',{
-      'type':'vector',
+   map.addLayer({
+  'id': 'povertyLevel',
+  'type': 'fill',
+  'source': 'censusLayer',
+  'source-layer': 'nyc_blck_grp_2020_wcensus_dro-4db43i',
+  'paint': {
+    'fill-color': [
+      'step',
+      ['get', 'AMR5E002'],
+      '#f5ef42',   // Color for values 300 and above
+      300, '#f5ef42' // Same color for values 300+
+    ],
+    'fill-opacity': [
+      'step',
+      ['get', 'AMR5E002'],
+      0,            // Opacity 0 for values below 300
+      300, 0.9      // Opacity 0.9 for values 300+
+    ]
+  }
+});
+
+
+
+    // Add the NYCHA layer next
+    map.addSource('nychaLayer', {
+      'type': 'vector',
       'url': 'mapbox://iamwfx.28ut4nij'
     });
 
-    // add a new layer with your polygons
-
     map.addLayer({
-      'id':'nychaBuildings',
-      'type':'fill',
-      'source':'nychaLayer',
-      'source-layer':'Map_of_NYCHA_Developments-7i6vok',
-      'paint':{
-        'fill-color':'red',
-        'fill-opacity': 0.5
-      }
-    })
-
-    map.addLayer({
-      'id':'floodZones',
-      'type':'fill',
-      'source':'sandyLayer',
-      'source-layer':'Sandy_Inundation_Zone-4qcajo',
-      'paint':{
-        'fill-color':'#00158f',
+      'id': 'nychaBuildings',
+      'type': 'fill',
+      'source': 'nychaLayer',
+      'source-layer': 'Map_of_NYCHA_Developments-7i6vok',
+      'paint': {
+        'fill-color': 'red',
         'fill-opacity': 0.5
       }
     });
+
+    // Add the flood zones layer last
+    map.addSource('sandyLayer', {
+      'type': 'vector',
+      'url': 'mapbox://iamwfx.bpjzmy2b'
+    });
+
+    map.addLayer({
+      'id': 'floodZones',
+      'type': 'fill',
+      'source': 'sandyLayer',
+      'source-layer': 'Sandy_Inundation_Zone-4qcajo',
+      'paint': {
+        'fill-color': '#00158f',
+        'fill-opacity': 0.5
+      }
+    });
+    // 设置图层的初始可见性
+map.setLayoutProperty('floodZones', "visibility", "visible");
+map.setLayoutProperty('povertyLevel', "visibility", "visible");
+map.setLayoutProperty('nychaBuildings', "visibility", "visible");
+
+// 获取复选框列表
+var layerList = document.getElementById("menu");
+var checkboxes = layerList.getElementsByTagName("input");
+
+// 定义 switchLayer 函数
+function switchLayer(layer) {
+    var clickedLayersLabel = layer.target.id; // 获取图层的标签
+    var visibility = map.getLayoutProperty(clickedLayersLabel, "visibility"); // 检查图层的可见性
+    if (visibility === "visible") {
+        map.setLayoutProperty(clickedLayersLabel, "visibility", "none");
+    } else {
+        map.setLayoutProperty(clickedLayersLabel, "visibility", "visible");
+    }
+}
+
+// 应用 switchLayer 到所有复选框
+for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].onclick = switchLayer;
+}
+
   });
-  // Within a script, you comment using two backslashes.
+
+
   </script>
 </body>
 
 </html>
-
