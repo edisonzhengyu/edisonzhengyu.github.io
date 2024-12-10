@@ -141,6 +141,7 @@ var config = {
             hidden: false,
             title: 'First case: Kaohsiung City',
             image: 'https://i.imgur.com/zjt8qD3.png',
+            description: 'In Kaohsiung City, the housing market responds immediately after news reports and TSMC’s confirmation of the two fabs’ locations. Housing prices in the treatment group increased significantly by 8.4% in the quarter following first announcement (the initial news disclosures) and TSMC’s confirmation about the forthcoming fabs, and continued to rise, reaching 17.6% by the second quarter after the news disclosures and announcement, compared to the reference period. However, the increase in housing prices decelerated to 13.5% in the quarter following the announcement of the 7 nm fab delay and further decreased to 9.6% by the second quarter after the announcement. Yet, once TSMC revealed that the 28 nm fab would be upgraded to an advanced fab, the increase of housing prices significantly surged to 13.4% in the following quarter and continued to rise to 16.2% two quarters after the announcement that advanced fab was confirmed to be a 2 nm fab.',
             location: {
                 center: [120.30439, 22.70021],
                 zoom: 15.52,
@@ -160,6 +161,7 @@ var config = {
             hidden: false,
             title: 'Second case: Taichung City',
             image: 'https://i.imgur.com/B61XmRv.png',
+            description: 'Housing prices in the treatment group of Taichung City significantly increased by 2.0% in the quarter following hints from senior government officials and climbed to 4.6% two quarters after the public acknowledgment of TSMC’s intentions, compared to the reference period. Although housing prices fluctuated in the following quarters, the mayor’s confirmation contributed to a significant 5.1% increase in housing prices, compared to the reference period.',
             location: {
                 center: [120.61051, 24.21115],
                 zoom: 15.76,
@@ -180,6 +182,7 @@ var config = {
             hidden: false,
             title: 'Thrid case: Taoyuan City',
             image: 'https://i.imgur.com/FPnfMaX.png',
+            description: 'Taoyuan City, housing prices in the treatment group did not experience a significant increase in the three quarters following the news reports regarding to the potential fab but rose by 4.2% significantly in the fourth quarter, compared to the reference period. Then the increase dropped to 0.7% once TSMC canceled out this plan.',
             location: {
                 center: [121.18237, 24.88883],
                 zoom: 15.23,
@@ -191,7 +194,28 @@ var config = {
             callback: '',
             onChapterEnter: [],
             onChapterExit: []
+        },
+
+        
+        {
+            id: 'tenth-identifier',
+            alignment: 'fully',
+            hidden: false,
+            title: 'Conclusion',
+            description: 'This research leverages Taiwan Semiconductor Manufacturing Company (TSMC)’s fab construction announcements in three cities in Taiwan as a quasi-experiment, providing causal evidence for the impact of expectation shocks on housing market dynamics. Our findings indicate that expectation shocks significantly increase housing prices.',
+            location: {
+                center: [120.87776, 23.62741],
+                zoom: 8.01,
+                pitch: 45.00,
+                bearing: 0.00
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [],
+            onChapterExit: []
         }
+
 
 
 
